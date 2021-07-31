@@ -2,14 +2,33 @@ const playlistService = require('../services/playlist.service');
 
 const playlistController = {};
 
-playlistController.upsertPlaylist = async function (req, res, next) {
+// playlistController.upsertPlaylist = async function (req, res, next) {
+//   try {
+//     const playlist = await playlistService.upsertPlaylist(req.body);
+//     return res.status(201).json({ status: 201, data: playlist });
+//   } catch (error) {
+//     return res.status(400).json({ status: 400, message: error.message });
+//   }
+// };
+
+playlistController.createPlaylist = async function (req, res, next) {
   try {
-    const playlist = await playlistService.upsertPlaylist(req.body);
+    const playlist = await playlistService.createPlaylist(req.body);
     return res.status(201).json({ status: 201, data: playlist });
   } catch (error) {
     return res.status(400).json({ status: 400, message: error.message });
   }
 };
+
+playlistController.updatePlaylist = async function (req, res, next) {
+  try {
+    const playlist = await playlistService.updatePlaylist(req.params, req.body);
+    return res.status(200).json({ playlist });
+  } catch (error) {
+    return res.status(400).json({ status: 400, message: error.message });
+  }
+};
+
 playlistController.getPlaylistByUser = async function (req, res, next) {
   try {
     const playlist = await playlistService.getPlaylistByUser(req.params);
@@ -39,7 +58,7 @@ playlistController.deletePlaylistAll = async function (req, res, next) {
 playlistController.updateNamePlaylist = async function (req, res, next) {
   try {
     const playlist = await playlistService.updateNamePlaylist(req.params, req.body);
-    return res.status(200).json({ playlist });
+    return res.status(200).json({ status: 200, data: playlist });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }

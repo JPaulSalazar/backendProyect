@@ -37,7 +37,11 @@ async function createFavorites(userId, songsList) {
 
 async function updateFavorites(user, songsList) {
   try {
-    user.songsList.push(songsList.toString());
+    for (let i = 0; i < songsList.length; i++) {
+      if (user.songsList.indexOf(songsList[i]) === -1) {
+        user.songsList.push(songsList[i]);
+      }
+    }
     await user.save();
     return user;
   } catch (e) {

@@ -24,7 +24,7 @@ async function findUser(userId) {
   }
 }
 
-async function createPlaylist(userId, name, songsList) {
+playlistService.createPlaylist = async function ({ userId, name, songsList }) {
   try {
     const playlist = new Playlist({ userId, name, songsList });
     const newPlaylist = await playlist.save();
@@ -33,18 +33,38 @@ async function createPlaylist(userId, name, songsList) {
     console.log('Error Message', e.message);
     throw new Error('Error while save playlist');
   }
-}
+};
 
-async function updatePlaylist(user, songsList) {
+playlistService.updatePlaylist = async function ({ id }, { songsList }) {
   try {
-    user.songsList.push(songsList.toString());
-    await user.save();
-    return user;
+    const playlists = await Playlist.findById(id);
+    for (let i = 0; i < { songsList }.length; i++) {
+      if (playlists.songsList.indexOf({ songsList }[i]) === -1) {
+        playlists.songsList.push({ songsList }[i]);
+      }
+    }
+    await playlists.save();
+    return playlists;
   } catch (e) {
     console.log('Error Message', e.message);
-    throw new Error('Error while update Recent Music');
+    throw new Error('Error while update playlist');
   }
-}
+};
+
+// async function updatePlaylist(user, songsList) {
+//   try {
+//     for (let i = 0; i < songsList.length; i++) {
+//       if (user.songsList.indexOf(songsList[i]) === -1) {
+//         user.songsList.push(songsList[i]);
+//       }
+//     }
+//     await user.save();
+//     return user;
+//   } catch (e) {
+//     console.log('Error Message', e.message);
+//     throw new Error('Error while update Recent Music');
+//   }
+// }
 
 async function deletePlaylist(user, songsList) {
   try {
@@ -58,18 +78,18 @@ async function deletePlaylist(user, songsList) {
   }
 }
 
-playlistService.upsertPlaylist = async function ({ userId, name, songsList }) {
-  try {
-    const user = await findUser(userId);
-    if (user) {
-      return await updatePlaylist(user, songsList);
-    }
-    return await createPlaylist(userId, name, songsList);
-  } catch (e) {
-    console.log('Error Message', e.message);
-    throw Error('Error while save playlist');
-  }
-};
+// playlistService.upsertPlaylist = async function ({ userId, name, songsList }) {
+//   try {
+//     const user = await findUser(userId);
+//     if (user) {
+//       return await updatePlaylist(user, songsList);
+//     }
+//     return await createPlaylist(userId, name, songsList);
+//   } catch (e) {
+//     console.log('Error Message', e.message);
+//     throw Error('Error while save playlist');
+//   }
+// };
 
 playlistService.deletePlaylistByUserAndSong = async function ({ userId, songList }) {
   try {
