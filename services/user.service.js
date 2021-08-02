@@ -49,3 +49,25 @@ userService.updateUser = async function ({ id }, { name, email, password }) {
 
 };
 module.exports = userService;
+
+userService.userLogin = async function ({ email, password }) {
+  try {
+    const userInfo = await User.findOne({ email });
+    if (userInfo.password === md5(password)) {
+      const info = {
+        id: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        existe: true,
+      };
+      return info;
+    }
+    const info = {
+      existe: false,
+    };
+    return info;
+  } catch (e) {
+    console.log(e.message);
+    throw new Error('Error dont exist User');
+  }
+};

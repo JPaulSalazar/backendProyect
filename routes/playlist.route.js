@@ -9,10 +9,12 @@ router.post('/playlist', playlistController.createPlaylist);
 
 router.get('/playlist/:userId', playlistController.getPlaylistByUser);
 
-router.delete('/playlist/:userId/songList/:songList', playlistController.deletePlaylistByUserAndSong);
+router.get('/oneplaylist/:id', playlistController.getPlaylist);
+
+router.delete('/playlist/:id/songList/:song', playlistController.deletePlaylist);
 
 router.delete('/playlist/:userId', playlistController.deletePlaylistAll);
 
-router.put('/playlist/:id', playlistController.updateNamePlaylist);
+router.put('/playlist/name/:id', playlistController.updateNamePlaylist);
 
 module.exports = router;

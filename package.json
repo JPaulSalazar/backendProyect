@@ -13,6 +13,7 @@
   "author": "stephanie & Jeampaul",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
