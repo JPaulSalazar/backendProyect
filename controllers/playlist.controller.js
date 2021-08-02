@@ -1,7 +1,10 @@
 const playlistService = require('../services/playlist.service');
 
 const playlistController = {};
+<<<<<<< HEAD
 
+=======
+>>>>>>> 98621041c731b86c0d1a839f7cba022130988713
 playlistController.createPlaylist = async function (req, res, next) {
   try {
     const playlist = await playlistService.createPlaylist(req.body);
@@ -30,6 +33,7 @@ playlistController.getPlaylistByUser = async function (req, res, next) {
 };
 
 playlistController.getPlaylist = async function (req, res, next) {
+<<<<<<< HEAD
   try {
     const playlist = await playlistService.getPlaylist(req.params);
     return res.status(200).json({ status: 200, data: playlist, message: 'Successfully playlist retrieved' });
@@ -40,6 +44,18 @@ playlistController.getPlaylist = async function (req, res, next) {
 
 playlistController.deletePlaylist = async function (req, res, next) {
   try {
+=======
+  try {
+    const playlist = await playlistService.getPlaylist(req.params);
+    return res.status(200).json({ status: 200, data: playlist, message: 'Successfully playlist retrieved' });
+  } catch (error) {
+    return res.status(400).json({ status: 400, message: error.message });
+  }
+};
+
+playlistController.deletePlaylist = async function (req, res, next) {
+  try {
+>>>>>>> 98621041c731b86c0d1a839f7cba022130988713
     const playlist = await playlistService.deletePlaylist(req.params);
     return res.status(202).json({ status: 202, data: playlist, message: 'Item removed successfully' });
   } catch (e) {
@@ -64,5 +80,4 @@ playlistController.updateNamePlaylist = async function (req, res, next) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-
 module.exports = playlistController;
