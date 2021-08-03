@@ -40,6 +40,7 @@ userService.updateUser = async function ({ id }, { name }) {
   try {
     const user = await User.findById(id);
     const updateUser = await user.set({ name });
+    delete updateUser.password;
     await updateUser.save();
     return updateUser;
   } catch (e) {
