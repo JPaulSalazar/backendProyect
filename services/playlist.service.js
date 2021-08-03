@@ -3,14 +3,26 @@ const Playlist = require('../models/playlist.model');
 
 const playlistService = {};
 
+async function findUser(userId) {
+  try {
+    const user = Playlist.findOne({ userId: mongoose.Types.ObjectId(userId) });
+    return user || null; // es lo mismo que user ? user : null
+  } catch (e) {
+    console.log('Error Message', e.message);
+    throw Error('Error while getting user');
+  }
+}
+
 playlistService.getPlaylistByUser = async function ({ userId }) {
   try {
     const playlist = await Playlist.find({ userId: mongoose.Types.ObjectId(userId) });
-    return playlist;
+    if (playlist) {
+      return playlist;
+    }
   } catch (e) {
     console.log('Error Message', e.message);
     // Log Errors
-    throw Error('Error while Paginating playlist');
+    throw Error('Error while getting playlist');
   }
 };
 
@@ -24,16 +36,6 @@ playlistService.getPlaylist = async function ({ id }) {
     throw Error('Error while getting playlist');
   }
 };
-
-async function findUser(userId) {
-  try {
-    const user = Playlist.findOne({ userId: mongoose.Types.ObjectId(userId) });
-    return user || null; // es lo mismo que user ? user : null
-  } catch (e) {
-    console.log('Error Message', e.message);
-    throw Error('Error while getting user');
-  }
-}
 
 playlistService.createPlaylist = async function ({ userId, name, songsList }) {
   try {
