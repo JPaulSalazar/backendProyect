@@ -1,7 +1,9 @@
+// se declara variable requerida para obtener la ruta de favorites services
 const favoritesService = require('../services/favorites.service');
-
+// se delcara una variable con un objeto vacío
 const favoritesController = {};
-
+// se realiza un upsert de favorites, es decir crea y actualiza
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 favoritesController.upsertFavorites = async function (req, res, next) {
   try {
     const favorites = await favoritesService.upsertFavorites(req.body);
@@ -10,7 +12,8 @@ favoritesController.upsertFavorites = async function (req, res, next) {
     return res.status(400).json({ status: 400, message: error.message });
   }
 };
-
+// se realiza un get de favorites
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 favoritesController.getFavoritesByUser = async function (req, res, next) {
   try {
     const favorites = await favoritesService.getFavoritesByUser(req.params);
@@ -19,6 +22,8 @@ favoritesController.getFavoritesByUser = async function (req, res, next) {
     return res.status(400).json({ status: 400, message: error.message });
   }
 };
+// se realiza un delete de favorites
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 favoritesController.deleteFavoritesByUserAndSong = async function (req, res, next) {
   try {
     const favorites = await favoritesService.deleteFavoritesByUserAndSong(req.params);
@@ -27,5 +32,5 @@ favoritesController.deleteFavoritesByUserAndSong = async function (req, res, nex
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-
+// se exporta el objeto que contiene todas las peticiones dentro
 module.exports = favoritesController;

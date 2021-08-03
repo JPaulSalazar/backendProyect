@@ -1,8 +1,12 @@
+// se declara variable requerida de moongose
 const mongoose = require('mongoose');
+// se declara variable requerida de la ruta de playlist model
 const Playlist = require('../models/playlist.model');
-
+// se declara un objeto vacío
 const playlistService = {};
-
+// se realiza una búsqueda de los usarios por id,
+// se utiliza el método findOne, para devolver un solo documento
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 async function findUser(userId) {
   try {
     const user = Playlist.findOne({ userId: mongoose.Types.ObjectId(userId) });
@@ -12,7 +16,8 @@ async function findUser(userId) {
     throw Error('Error while getting user');
   }
 }
-
+// se realiza un get de playlist por id usuario
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.getPlaylistByUser = async function ({ userId }) {
   try {
     const playlist = await Playlist.find({ userId: mongoose.Types.ObjectId(userId) });
@@ -23,7 +28,9 @@ playlistService.getPlaylistByUser = async function ({ userId }) {
     throw Error('Error while getting playlist');
   }
 };
-
+// se realiza un get de playlist por id 
+// se utiliza el método findById, para buscar un solo documento por su id
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.getPlaylist = async function ({ id }) {
   try {
     const playlist = await Playlist.findById(id);
@@ -34,7 +41,10 @@ playlistService.getPlaylist = async function ({ id }) {
     throw Error('Error while getting playlist');
   }
 };
-
+// se realiza un create de playlist, recibe los parámetros respectivos
+// se utiliza el método save, para guardar el documento con la
+// información correspondiente en la base de datos
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.createPlaylist = async function ({ userId, name, songsList }) {
   try {
     const playlist = new Playlist({ userId, name, songsList });
@@ -45,11 +55,16 @@ playlistService.createPlaylist = async function ({ userId, name, songsList }) {
     throw new Error('Error while save playlist');
   }
 };
-
+// se realiza un update de playlist, recibe los parámetros respectivos
+// se utiliza el método save, para guardar el documento con la
+// información correspondiente en la base de datos
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.updatePlaylist = async function ({ id }, { songsList }) {
   try {
     const playlists = await Playlist.findById(id);
+    // se recorre la lista de canciones
     for (let i = 0; i < songsList.length; i++) {
+      // si en la lista no esxiste la canción, se envía al array
       if (playlists.songsList.indexOf(songsList[i]) === -1) {
         playlists.songsList.push(songsList[i]);
       }
@@ -61,7 +76,11 @@ playlistService.updatePlaylist = async function ({ id }, { songsList }) {
     throw new Error('Error while update playlist');
   }
 };
-
+// se realiza un delete de favoritos,
+// se utiliza el método save, para guardar el documento con la
+// información correspondiente en la base de datos
+// se utiliza método pull para eliminar un elemento de la coleción y devolver el elemento extraído
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.deletePlaylist = async function ({ id, song }) {
   try {
     const playlist = await Playlist.findById(id);
@@ -74,7 +93,9 @@ playlistService.deletePlaylist = async function ({ id, song }) {
     throw Error('Error while delete playlist');
   }
 };
-
+// se crea un delete de todas las playlists
+// se utiliza el método find para hacer una búsqueda por id
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.deletePlaylistAll = async function ({ id }) {
   try {
     const playlist = await Playlist.findByIdAndRemove(id);
@@ -84,7 +105,11 @@ playlistService.deletePlaylistAll = async function ({ id }) {
     throw new Error('Error while delete playlist');
   }
 };
-
+// se crea un update del nombre de la playlist
+// se utiliza el método findOne, para devolver un solo documento
+// se utiliza el método save, para guardar el documento con la
+// información correspondiente en la base de datos
+// se crea una función asíncrona con su respectiva información en el try y un catch para los errores
 playlistService.updateNamePlaylist = async function ({ id }, { name }) {
   try {
     const playlists = await Playlist.findById(id);
@@ -96,5 +121,5 @@ playlistService.updateNamePlaylist = async function ({ id }, { name }) {
     throw Error('Error while save playist name');
   }
 };
-
+// se exporta el objeto con todos los métodos
 module.exports = playlistService;
