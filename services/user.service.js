@@ -47,7 +47,6 @@ userService.updateUser = async function ({ id }, { name }) {
     console.log(e.message);
     throw new Error('Error while update user');
   }
-
 };
 module.exports = userService;
 

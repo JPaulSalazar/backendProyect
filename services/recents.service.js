@@ -14,7 +14,6 @@ recentsService.getRecentsByUser = async function ({ userId }) {
   }
 };
 
-
 async function findUser(userId) {
   try {
     const user = Recents.findOne({ userId: mongoose.Types.ObjectId(userId) });
@@ -38,7 +37,11 @@ async function createRecents(userId, songsList) {
 
 async function updateRecents(user, songsList) {
   try {
-    user.songsList.unshift(songsList.toString());
+    for (let i = 0; i < songsList.length; i++) {
+      if (user.songsList.indexOf(songsList[i]) === -1) {
+        user.songsList.unshift(songsList.toString());
+      }
+    }
     await user.save();
     return user;
   } catch (e) {
