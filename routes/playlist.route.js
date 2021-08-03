@@ -13,7 +13,7 @@ router.get('/oneplaylist/:id', playlistController.getPlaylist);
 
 router.delete('/playlist/:id/songList/:song', playlistController.deletePlaylist);
 
-router.delete('/playlist/:userId', playlistController.deletePlaylistAll);
+router.delete('/playlist/:id', playlistController.deletePlaylistAll);
 
 router.put('/playlist/name/:id', playlistController.updateNamePlaylist);
 
