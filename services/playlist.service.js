@@ -16,9 +16,7 @@ async function findUser(userId) {
 playlistService.getPlaylistByUser = async function ({ userId }) {
   try {
     const playlist = await Playlist.find({ userId: mongoose.Types.ObjectId(userId) });
-    if (playlist === []) {
-      return playlist;
-    }
+    return playlist;
   } catch (e) {
     console.log('Error Message', e.message);
     // Log Errors
