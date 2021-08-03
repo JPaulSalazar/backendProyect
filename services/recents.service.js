@@ -39,7 +39,7 @@ async function updateRecents(user, songsList) {
   try {
     for (let i = 0; i < songsList.length; i++) {
       if (user.songsList.indexOf(songsList[i]) === -1) {
-        user.songsList.unshift(songsList.toString());
+        user.songsList.unshift(songsList[i]);
       }
     }
     await user.save();
